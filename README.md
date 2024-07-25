@@ -1,12 +1,12 @@
 # 3DViewer v1.0
 
-> При старте работы над проектом просим тебя постараться хронометрировать время работы над проектом.
-> По завершении работы над проектом, пожалуйста, ответь на два вопроса [в этом опросе](https://forms.gle/51aADrXJGHYH9jEi6)
 
 Implementation of 3DViewer v1.0.
 
 The russian version of the task can be found in the repository.
 
+
+💡 [Tap here](https://new.oprosso.net/p/4cb31ec3f47a4596bc758ea1861fb624) **to leave your feedback on the project**. It's anonymous and will help our team make your educational experience better. We recommend completing the survey immediately after the project.
 
 ## Contents
 
@@ -217,5 +217,3 @@ You need to develop a program to visualise 3D wireframe models:
 - The program must allow saving the captured (rendered) images as bmp and jpeg files;
 - The program must allow recording small screencasts by a special button - the current custom affine transformation of the loaded object into gif-animation (640x480, 10fps, 5s).
 
-
-💡 [Tap here](https://forms.yandex.ru/cloud/641815b8e010db24ff2687a4/) **to leave your feedback on the project.** Product Team really tries to make your educational experience better.
