@@ -21,7 +21,6 @@ else
         LIBS = $(GLFW3) -lGL -lm -lGLU -lGLEW -lrt -lgif
     endif
 endif
-
 all: $(BIN)
 
 $(BIN): $(OBJ)
@@ -41,6 +40,9 @@ uninstall:
 clean:
 	rm -f $(OBJ) bin/$(BIN)
 	rm -rf $(GCOV_OUTPUT)
+	rm -rf ./backend/*.gc*
+	rm -rf docs
+	rm ./tests/test
 	@echo "Cleaned build files"
 
 dvi:
