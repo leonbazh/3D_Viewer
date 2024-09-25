@@ -1,4 +1,4 @@
-#include "../core.h" 
+#include "../core.h"
 
 /**
  * @brief Загружает настройки интерфейса из файла settings.cfg.
@@ -6,7 +6,8 @@
  * Если файл settings.cfg существует, настройки загружаются из него.
  * В противном случае выводится сообщение и используются настройки по умолчанию.
  *
- * @param settings Указатель на структуру GUI_view_settings, куда будут загружены настройки.
+ * @param settings Указатель на структуру GUI_view_settings, куда будут
+ * загружены настройки.
  */
 void load_settings(GUI_view_settings *settings) {
   FILE *file = fopen("settings.cfg", "r");
@@ -24,7 +25,8 @@ void load_settings(GUI_view_settings *settings) {
  *
  * Записывает содержимое структуры настроек в файл settings.cfg.
  *
- * @param settings Указатель на структуру GUI_view_settings, содержащую настройки для сохранения.
+ * @param settings Указатель на структуру GUI_view_settings, содержащую
+ * настройки для сохранения.
  */
 void save_settings(GUI_view_settings *settings) {
   FILE *file = fopen("settings.cfg", "w");
@@ -38,9 +40,11 @@ void save_settings(GUI_view_settings *settings) {
 /**
  * @brief Инициализирует структуру данных директории для поиска .obj файлов.
  *
- * Задает начальные значения для структуры GUI_directory_data, включая директорию для поиска файлов.
+ * Задает начальные значения для структуры GUI_directory_data, включая
+ * директорию для поиска файлов.
  *
- * @param data Указатель на структуру GUI_directory_data, которая будет инициализирована.
+ * @param data Указатель на структуру GUI_directory_data, которая будет
+ * инициализирована.
  * @param directory Строка с путём к директории, где будут искаться файлы .obj.
  */
 void init_dir_data(struct GUI_directory_data *data, const char *directory) {
@@ -54,10 +58,12 @@ void init_dir_data(struct GUI_directory_data *data, const char *directory) {
 /**
  * @brief Сканирует указанную директорию на наличие .obj файлов.
  *
- * Функция сканирует директорию, указанную в структуре GUI_directory_data, и ищет файлы с расширением .obj.
- * Обнаруженные файлы добавляются в список файлов в структуре state.
+ * Функция сканирует директорию, указанную в структуре GUI_directory_data, и
+ * ищет файлы с расширением .obj. Обнаруженные файлы добавляются в список файлов
+ * в структуре state.
  *
- * @param state Указатель на структуру GUI_directory_data, содержащую данные директории и список файлов.
+ * @param state Указатель на структуру GUI_directory_data, содержащую данные
+ * директории и список файлов.
  */
 void scan_obj_files(struct GUI_directory_data *state) {
   DIR *dir = opendir(state->obj_directory);

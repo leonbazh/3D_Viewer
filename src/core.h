@@ -114,13 +114,12 @@ typedef struct GUI_view_settings {
 } GUI_view_settings;
 
 struct GUI_directory_data {
-  char obj_files[MAX_FILES][MAX_FILENAME_LENGTH];  
-  int obj_file_count;  
-  char selected_obj_file[MAX_PATH_LENGTH];  
-  int file_menu_active;  
-  char obj_directory[MAX_PATH_LENGTH];  
+  char obj_files[MAX_FILES][MAX_FILENAME_LENGTH];
+  int obj_file_count;
+  char selected_obj_file[MAX_PATH_LENGTH];
+  int file_menu_active;
+  char obj_directory[MAX_PATH_LENGTH];
 };
-
 
 /**
  * @brief Сохраняет настройки интерфейса в файл settings.cfg.
@@ -128,37 +127,41 @@ struct GUI_directory_data {
  * Эта функция записывает текущие настройки интерфейса, такие как тип проекции,
  * цвет вершин и ребер, толщину линий и цвет фона, в файл settings.cfg.
  *
- * @param settings Указатель на структуру GUI_view_settings, содержащую настройки для сохранения.
+ * @param settings Указатель на структуру GUI_view_settings, содержащую
+ * настройки для сохранения.
  */
 void save_settings(GUI_view_settings *settings);
 
 /**
  * @brief Загружает настройки интерфейса из файла settings.cfg.
  *
- * Если файл settings.cfg существует, настройки загружаются из него. Если файл не найден,
- * настройки остаются по умолчанию.
+ * Если файл settings.cfg существует, настройки загружаются из него. Если файл
+ * не найден, настройки остаются по умолчанию.
  *
- * @param settings Указатель на структуру GUI_view_settings, куда будут загружены настройки.
+ * @param settings Указатель на структуру GUI_view_settings, куда будут
+ * загружены настройки.
  */
 void load_settings(GUI_view_settings *settings);
 
 /**
  * @brief Устанавливает настройки интерфейса по умолчанию.
  *
- * Устанавливает значения настроек интерфейса по умолчанию для параметров, таких как тип проекции,
- * цвет фона, цвет ребер, и т.д.
+ * Устанавливает значения настроек интерфейса по умолчанию для параметров, таких
+ * как тип проекции, цвет фона, цвет ребер, и т.д.
  *
- * @param settings Указатель на структуру GUI_view_settings, куда будут записаны значения по умолчанию.
+ * @param settings Указатель на структуру GUI_view_settings, куда будут записаны
+ * значения по умолчанию.
  */
 void set_default_settings(GUI_view_settings *settings);
 
 /**
  * @brief Инициализирует структуру данных директории для поиска .obj файлов.
  *
- * Устанавливает директорию, в которой будут искаться файлы .obj, а также обнуляет
- * список найденных файлов и состояние меню выбора файла.
+ * Устанавливает директорию, в которой будут искаться файлы .obj, а также
+ * обнуляет список найденных файлов и состояние меню выбора файла.
  *
- * @param data Указатель на структуру GUI_directory_data, которая будет инициализирована.
+ * @param data Указатель на структуру GUI_directory_data, которая будет
+ * инициализирована.
  * @param directory Путь к директории для поиска файлов .obj.
  */
 void init_dir_data(struct GUI_directory_data *data, const char *directory);
@@ -166,10 +169,12 @@ void init_dir_data(struct GUI_directory_data *data, const char *directory);
 /**
  * @brief Сканирует указанную директорию на наличие .obj файлов.
  *
- * Функция проходит по файлам в указанной директории и ищет файлы с расширением .obj.
- * Найденные файлы добавляются в список файлов в структуре GUI_directory_data.
+ * Функция проходит по файлам в указанной директории и ищет файлы с расширением
+ * .obj. Найденные файлы добавляются в список файлов в структуре
+ * GUI_directory_data.
  *
- * @param data Указатель на структуру GUI_directory_data, содержащую данные директории и список файлов.
+ * @param data Указатель на структуру GUI_directory_data, содержащую данные
+ * директории и список файлов.
  */
 void scan_obj_files(struct GUI_directory_data *data);
 

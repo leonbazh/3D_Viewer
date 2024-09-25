@@ -18,8 +18,8 @@
 #include "gui/nuklear_glfw_gl3/nuklear_glfw_gl3.h"
 
 #include "core.h"
-#include "gui/NkSetDraculaTheme.c"
 #include "gui/GUI.c"
+#include "gui/NkSetDraculaTheme.c"
 
 void render_model(Model *model, GUI_view_settings *settings,
                   struct GUI_transform_panel *unit) {
@@ -108,7 +108,6 @@ static void error_callback(int e, const char *d) {
 }
 
 int main(void) {
-
   int win_width = WIN_WIDTH;
   int win_height = WIN_HEIGHT;
 
@@ -146,8 +145,8 @@ int main(void) {
     struct nk_font_config cfg = nk_font_config(14);
     nk_glfw3_font_stash_begin(&glfw, &atlas);
     cfg.range = nk_font_cyrillic_glyph_ranges();
-    struct nk_font *hero =
-        nk_font_atlas_add_from_file(atlas, "./gui/Roboto-Regular.ttf", 16, &cfg);
+    struct nk_font *hero = nk_font_atlas_add_from_file(
+        atlas, "./gui/Roboto-Regular.ttf", 16, &cfg);
     nk_style_set_font(ctx, &hero->handle);
     nk_glfw3_font_stash_end(&glfw);
   }
@@ -201,7 +200,6 @@ int main(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     if (model == NULL) {
-
       GUI_browse_obj_files(ctx, &model, &data);
       nk_end(ctx);
 
@@ -253,12 +251,11 @@ int main(void) {
                     MAX_ELEMENT_BUFFER);
     glfwSwapBuffers(win);
 
-  #ifdef _WIN32
+#ifdef _WIN32
     Sleep(200)
-  #elif _linux_
+#elif _linux_
     usleep(200);
-  #endif
-
+#endif
   }
 
   nk_glfw3_shutdown(&glfw);
