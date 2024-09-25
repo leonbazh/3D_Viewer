@@ -19,9 +19,7 @@
 
 #include "core.h"
 #include "gui/NkSetDraculaTheme.c"
-#include "gui/nk_transform_gui_module.c"
-#include "model_loader.h"
-#include "transformations.h"
+#include "gui/GUI.c"
 
 void render_model(Model *model, GUI_view_settings *settings,
                   struct GUI_transform_panel *unit) {
@@ -148,7 +146,7 @@ int main(void) {
     nk_glfw3_font_stash_begin(&glfw, &atlas);
     cfg.range = nk_font_cyrillic_glyph_ranges();
     struct nk_font *hero =
-        nk_font_atlas_add_from_file(atlas, "Roboto-Regular.ttf", 16, &cfg);
+        nk_font_atlas_add_from_file(atlas, "./gui/Roboto-Regular.ttf", 16, &cfg);
     nk_style_set_font(ctx, &hero->handle);
     nk_glfw3_font_stash_end(&glfw);
   }
@@ -202,16 +200,12 @@ int main(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     if (model == NULL) {
-      printf("Model is NULL. Please select a file to load.\n");
 
       GUI_browse_obj_files(ctx, &model, &data);
       nk_end(ctx);
 
       if (model != NULL) {
-        printf("Model loaded successfully: %s\n", data.selected_obj_file);
         status_bar.model = model;
-      } else {
-        printf("Error: Model loading failed.\n");
       }
     } else {
       GUI_draw_tabs(ctx, &tab_unit);
@@ -261,6 +255,10 @@ int main(void) {
 
   nk_glfw3_shutdown(&glfw);
   glfwTerminate();
-  free_model(model);
+
+  if (model != NULL) {
+    free_model(model);
+  }
+
   return 0;
 }

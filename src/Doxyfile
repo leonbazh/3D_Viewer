@@ -3,14 +3,13 @@
 # Основная информация
 PROJECT_NAME           = "3D Viewer"
 PROJECT_BRIEF          = "Документация для проекта 3D Viewer"
-PROJECT_LOGO           = "logo.png"     # Укажите путь к логотипу, если есть
 OUTPUT_DIRECTORY       = docs           # Папка для выходной документации
 
 # Включаемые файлы
-INPUT                  = ./src ./include
+INPUT                  = ./ 
 FILE_PATTERNS          = *.c *.h
 RECURSIVE              = YES            # Рекурсивный поиск файлов в каталогах
-EXCLUDE_PATTERNS       = */tests/*       # Исключить файлы тестов
+EXCLUDE_PATTERNS       = */tests/* */gui/* main.c
 
 # Типы документов
 GENERATE_HTML          = YES

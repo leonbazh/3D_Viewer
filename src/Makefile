@@ -6,7 +6,7 @@ DOCS_DIR = docs
 GCOV_OUTPUT = gcov_report *.gc*
 
 CFLAGS += -std=c11 -Wall -Wextra -pedantic -O2 -g
-SRC = main.c model_loader.c transformations.c misc_funcs.c
+SRC = main.c ./backend/model_loader.c ./backend/transformations.c ./backend/misc_funcs.c
 OBJ = $(SRC:.c=.o)
 
 ifeq ($(OS),Windows_NT)
@@ -52,11 +52,10 @@ dist:
 	@tar -cvzf $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz $(SRC) Makefile
 	@echo "Distribution package created: $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz"
 
-tests:
-	gcc tests/backend_tests.c
-	#@$(MAKE) -C tests
-	#./tests/test_runner
-	#@echo "Tests complete"
+test:
+	$(CC) ./tests/backend_tests.c ./backend/model_loader.c ./backend/transformations.c -lm -lcheck -lsubunit -o ./tests/test
+	./tests/test
+	@echo "Tests complete"
 
 gcov_report: CFLAGS += -fprofile-arcs -ftest-coverage
 gcov_report: clean $(OBJ)

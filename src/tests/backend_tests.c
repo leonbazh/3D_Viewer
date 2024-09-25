@@ -1,7 +1,7 @@
 #include <check.h>
 #include <stdlib.h>
-#include "../model_loader.h"
-#include "../transformations.h"
+#include "../backend/model_loader.h"
+#include "../backend/transformations.h"
 
 START_TEST(test_load_valid_model) {
     Model *model = load_model_from_obj("./obj/valid_model.obj");

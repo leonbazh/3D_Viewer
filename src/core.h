@@ -14,8 +14,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "model_loader.h"
-#include "transformations.h"
+#include "./backend/model_loader.h"
+#include "./backend/transformations.h"
 
 #ifdef _WIN32
 #include <windows.h>

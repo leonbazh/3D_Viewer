@@ -149,19 +149,15 @@ static void GUI_browse_obj_files(struct nk_context *ctx, Model **model, struct G
     if (nk_begin(ctx, "OBJ File Browser", nk_rect(0, GUI_FILE_BROWSE_Y_START, GUI_WIN_WIDTH_X, GUI_FILE_BROWSE_HEIGHT),  // Увеличим высоту окна
                  NK_WINDOW_BORDER | NK_WINDOW_TITLE)) {
 
-        // Заголовок выбора файла
         nk_layout_row_dynamic(ctx, 30, 1);
         nk_label(ctx, "Select OBJ File from Directory", NK_TEXT_LEFT);
 
-        // Кнопка для отображения/скрытия меню выбора файла
         nk_layout_row_dynamic(ctx, 30, 1);
         if (nk_button_label(ctx, "File")) {
             data->file_menu_active = !data->file_menu_active;  // Переключаем активность меню
             if (data->file_menu_active) {
                 scan_obj_files(data);  // Сканируем директорию на наличие .obj файлов
 
-                // Отладка: выводим список найденных файлов
-                printf("Found %d OBJ files:\n", data->obj_file_count);
                 for (int i = 0; i < data->obj_file_count; i++) {
                     printf("File %d: %s\n", i + 1, data->obj_files[i]);
                 }
