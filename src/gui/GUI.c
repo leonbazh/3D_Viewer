@@ -89,10 +89,6 @@ static void GUI_draw_transform_panel(struct nk_context *ctx,
       unit->is_picture_needed = true;
     }
 
-    nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 1);
-    if (nk_button_label(ctx, "Take a GIF")) {
-      unit->is_gif_needed = true;
-    }
   }
 }
 
