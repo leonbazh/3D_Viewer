@@ -95,6 +95,9 @@ struct GUI_transform_panel {
   float translation[3];
   float rotation[3];
   float scale_factor;
+  int picture_format;
+  bool is_picture_needed;
+  bool is_gif_needed;
 };
 
 struct GUI_status_bar {
@@ -177,5 +180,9 @@ void init_dir_data(struct GUI_directory_data *data, const char *directory);
  * директории и список файлов.
  */
 void scan_obj_files(struct GUI_directory_data *data);
+
+void generate_filename_with_timestamp(char *buffer, size_t buffer_size,
+                                      const char *base_name,
+                                      const char *extension);
 
 #endif

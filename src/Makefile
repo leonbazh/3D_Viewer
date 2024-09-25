@@ -6,19 +6,19 @@ DOCS_DIR = docs
 GCOV_OUTPUT = gcov_report *.gc*
 
 CFLAGS += -std=c11 -Wall -Wextra -pedantic -O2 -g
-SRC = main.c ./backend/model_loader.c ./backend/transformations.c ./backend/misc_funcs.c
+SRC = main.c ./backend/model_loader.c ./backend/transformations.c ./backend/misc_funcs.c ./gen_file_name.c
 OBJ = $(SRC:.c=.o)
 
 ifeq ($(OS),Windows_NT)
     BIN := $(BIN).exe
-    LIBS = -mwindows -lglfw3 -lopengl32 -lm -lGLU32 -lGLEW32
+    LIBS = -mwindows -lglfw3 -lopengl32 -lm -lGLU32 -lGLEW32 -lgif
 else
     UNAME_S := $(shell uname -s)
     GLFW3 := $(shell pkg-config --libs glfw3)
     ifeq ($(UNAME_S),Darwin)
-        LIBS := $(GLFW3) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -lm -lGLEW -L/usr/local/lib
+        LIBS := $(GLFW3) -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -lm -lGLEW -L/usr/local/lib -lgif
     else
-        LIBS = $(GLFW3) -lGL -lm -lGLU -lGLEW -lrt
+        LIBS = $(GLFW3) -lGL -lm -lGLU -lGLEW -lrt -lgif
     endif
 endif
 

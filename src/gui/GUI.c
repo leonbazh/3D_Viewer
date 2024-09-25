@@ -4,7 +4,7 @@ static void GUI_draw_transform_panel(struct nk_context *ctx,
           ctx, "Main",
           nk_rect(0, GUI_TRANSFORM_PANEL_Y_START, GUI_WIN_WIDTH_X,
                   GUI_TRANSFORM_PANEL_Y_END),
-          NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR)) {
+          NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND)) {
     float ratio_two[] = {0.5f, 0.5f};
 
     nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_LABEL_HEIGHT, 1);
@@ -71,9 +71,27 @@ static void GUI_draw_transform_panel(struct nk_context *ctx,
     nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_LABEL_HEIGHT, 1);
     nk_label(ctx, "Capture", NK_TEXT_CENTERED);
 
+    nk_bool is_jpg_selected = (unit->picture_format == 1);  // Если формат JPG (0)
+    nk_bool is_bmp_selected = (unit->picture_format == 0);
+
+    nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT,
+                  2, ratio_two);
+    if (nk_radio_label(ctx, "BMP", &is_bmp_selected)) {
+      unit->picture_format = 0;
+    } 
+
+    if (nk_radio_label(ctx, "JPG", &is_jpg_selected)) {
+      unit->picture_format = 1;
+    } 
+
     nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 1);
     if (nk_button_label(ctx, "Take a picture")) {
-      puts("placeholder");
+      unit->is_picture_needed = true;
+    }
+
+    nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 1);
+    if (nk_button_label(ctx, "Take a GIF")) {
+      unit->is_gif_needed = true;
     }
   }
 }

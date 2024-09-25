@@ -100,3 +100,5 @@ void scan_obj_files(struct GUI_directory_data *state) {
   printf("Found %d OBJ files in %s\n", state->obj_file_count,
          state->obj_directory);
 }
+
+

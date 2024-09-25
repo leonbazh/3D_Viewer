@@ -1,7 +1,6 @@
 /* nuklear - public domain */
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <string.h>
 #define MAX_VERTEX_BUFFER 512 * 1024
 #define MAX_ELEMENT_BUFFER 128 * 1024
 #define NK_INCLUDE_FIXED_TYPES
@@ -14,11 +13,45 @@
 #define NK_GLFW_GL3_IMPLEMENTATION
 #define NK_KEYSTATE_BASED_INPUT
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include <gif_lib.h>
+
 #include "gui/nuklear_glfw_gl3/nuklear.h"
 #include "gui/nuklear_glfw_gl3/nuklear_glfw_gl3.h"
+#include "./gui/stb_image_write.h"
 #include "core.h"
 #include "gui/GUI.c"
 #include "gui/NkSetDraculaTheme.c"
+
+void save_render(const char *filename, int width, int height, int format) {
+  int channels = 3;  // RGB
+  unsigned char *pixels = malloc(width * height * channels);
+
+  // Чтение пикселей с экрана
+  glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+  // Переворот изображения по вертикали
+  for (int y = 0; y < height / 2; ++y) {
+    int opposite_y = height - y - 1;
+    for (int x = 0; x < width * channels; ++x) {
+      unsigned char temp = pixels[y * width * channels + x];
+      pixels[y * width * channels + x] =
+          pixels[opposite_y * width * channels + x];
+      pixels[opposite_y * width * channels + x] = temp;
+    }
+  }
+
+  // Сохранение в нужном формате
+  if (format == 0) {
+    stbi_write_bmp(filename, width, height, channels, pixels);
+    printf("%s.bmp - saved", filename);
+  } else if (format == 1) {
+    stbi_write_jpg(filename, width, height, channels, pixels,
+                   90);  // Качество JPEG 90
+    printf("%s.jpg - saved", filename);
+  }
+  free(pixels);
+}
 
 void render_model(Model *model, GUI_view_settings *settings,
                   struct GUI_transform_panel *unit) {
@@ -29,22 +62,17 @@ void render_model(Model *model, GUI_view_settings *settings,
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // Clear buffers
   glLoadIdentity();                                    // Load identity matrix
 
-  // Set projection type
   if (settings->projection_type == 0) {
-    // Parallel projection
     glOrtho(-1.5, 1.5, -1.5, 1.5, -10.0, 10.0);
   } else {
-    // Central (Perspective) projection
     gluPerspective(45.0, (double)WIN_WIDTH / (double)WIN_HEIGHT, 0.1, 100.0);
     glTranslatef(0.0f, 0.0f, -5.0f);  // Move the camera back a bit
   }
 
-  // Set edge color and thickness
   glLineWidth(settings->edge_thickness);
   glColor3f(settings->edge_color[0], settings->edge_color[1],
             settings->edge_color[2]);
 
-  // Set edge type (solid/dashed)
   if (settings->edge_type == 1) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0x00FF);  // Dashed line
@@ -59,7 +87,6 @@ void render_model(Model *model, GUI_view_settings *settings,
   glRotatef(unit->rotation[2], 0.0, 0.0, 1.0);
   glScalef(unit->scale_factor, unit->scale_factor, unit->scale_factor);
 
-  // Draw the model as a wireframe
   glBegin(GL_LINES);
   for (int i = 0; i < model->face_count; i++) {
     Face face = model->faces[i];
@@ -68,7 +95,6 @@ void render_model(Model *model, GUI_view_settings *settings,
     Vertex v2 = model->vertices[face.v2 - 1];
     Vertex v3 = model->vertices[face.v3 - 1];
 
-    // Draw edges of the triangle (v1 -> v2, v2 -> v3, v3 -> v1)
     glVertex3f(v1.x, v1.y, v1.z);
     glVertex3f(v2.x, v2.y, v2.z);
 
@@ -80,7 +106,6 @@ void render_model(Model *model, GUI_view_settings *settings,
   }
   glEnd();
 
-  // Draw vertices (circles or squares)
   if (settings->vertex_display != 0) {
     for (int i = 0; i < model->vertex_count; i++) {
       Vertex v = model->vertices[i];
@@ -91,10 +116,8 @@ void render_model(Model *model, GUI_view_settings *settings,
 
       glBegin(GL_POINTS);
       if (settings->vertex_display == 1) {
-        // Render as circle (using point)
         glVertex3f(v.x, v.y, v.z);
       } else if (settings->vertex_display == 2) {
-        // Render as square (by drawing a small square)
         glVertex3f(v.x, v.y, v.z);
       }
       glEnd();
@@ -240,6 +263,22 @@ int main(void) {
 
       if (model != NULL) {
         render_model(model, &settings, &unit);
+
+        if (unit.is_picture_needed) {
+          char filename[128] = {0};
+
+          if (unit.picture_format == 0) {
+            generate_filename_with_timestamp(filename, sizeof(filename),
+                                             "output", "bmp");
+          } else if (unit.picture_format == 1) {
+            generate_filename_with_timestamp(filename, sizeof(filename),
+                                             "output", "jpg");
+          }
+
+          save_render(filename, 640, 480, unit.picture_format);
+          unit.is_picture_needed = false;
+        }
+
       } else {
         printf("Error: Model is NULL, cannot render.\n");
       }
