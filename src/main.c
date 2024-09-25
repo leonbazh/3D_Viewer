@@ -108,6 +108,7 @@ static void error_callback(int e, const char *d) {
 }
 
 int main(void) {
+
   int win_width = WIN_WIDTH;
   int win_height = WIN_HEIGHT;
 
@@ -251,6 +252,13 @@ int main(void) {
     nk_glfw3_render(&glfw, NK_ANTI_ALIASING_ON, MAX_VERTEX_BUFFER,
                     MAX_ELEMENT_BUFFER);
     glfwSwapBuffers(win);
+
+  #ifdef _WIN32
+    Sleep(200)
+  #elif _linux_
+    usleep(200);
+  #endif
+
   }
 
   nk_glfw3_shutdown(&glfw);

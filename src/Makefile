@@ -49,7 +49,7 @@ dvi:
 
 dist:
 	@mkdir -p $(DIST_DIR)
-	@tar -cvzf $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz $(SRC) Makefile
+	@tar -cvzf $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz *.c *.h ./backend ./obj ./gui ./bin Makefile
 	@echo "Distribution package created: $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz"
 
 test:
