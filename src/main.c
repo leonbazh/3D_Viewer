@@ -16,7 +16,6 @@
 
 #include "gui/nuklear_glfw_gl3/nuklear.h"
 #include "gui/nuklear_glfw_gl3/nuklear_glfw_gl3.h"
-
 #include "core.h"
 #include "gui/GUI.c"
 #include "gui/NkSetDraculaTheme.c"
@@ -139,7 +138,6 @@ int main(void) {
   glfwSetWindowSizeLimits(win, win_width, win_height, win_width, win_height);
   struct nk_context *ctx;
   ctx = nk_glfw3_init(&glfw, win, NK_GLFW3_INSTALL_CALLBACKS);
-
   {
     struct nk_font_atlas *atlas;
     struct nk_font_config cfg = nk_font_config(14);

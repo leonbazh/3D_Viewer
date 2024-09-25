@@ -226,8 +226,8 @@ static void GUI_browse_obj_files(struct nk_context *ctx, Model **model,
         if (nk_button_label(ctx, data->obj_files[i])) {
           // Проверяем, не превышает ли полная длина пути максимальный размер
           int total_length = strlen(data->obj_directory) +
-                             strlen(data->obj_files[i]) + 1;  // +1 для '/'
-          if (total_length < MAX_PATH_LENGTH - 128) {
+                             strlen(data->obj_files[i]) + 6;  // +1 для '/'
+          if (total_length < MAX_PATH_LENGTH) {
             // Сохраняем выбранный файл
             snprintf(data->selected_obj_file, total_length, "%s/%s",
                      data->obj_directory, data->obj_files[i]);
