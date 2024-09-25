@@ -1,6 +1,5 @@
-void GUI_draw_transform_panel(struct nk_context *ctx, struct GUI_transform_panel *unit) {
-
-  if (nk_begin(ctx, "Main", nk_rect(0, GUI_TRANSFORM_PANEL_Y_START, GUI_WIN_WIDTH_X, GUI_TRANSFORM_PANEL_Y_END), NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR )) {
+static void GUI_draw_transform_panel(struct nk_context *ctx, struct GUI_transform_panel *unit) {
+if (nk_begin(ctx, "Main", nk_rect(0, GUI_TRANSFORM_PANEL_Y_START, GUI_WIN_WIDTH_X, GUI_TRANSFORM_PANEL_Y_END), NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR )) {
 
     float ratio_two[] = {0.5f, 0.5f};
 
@@ -8,31 +7,38 @@ void GUI_draw_transform_panel(struct nk_context *ctx, struct GUI_transform_panel
       nk_label(ctx, "Position", NK_TEXT_CENTERED);
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "X:", -5.0f, &unit->model_x_pos_property, 5.0f, 0.1f, 0.05f);
+      nk_property_float(ctx, "X:", -5.0f, &unit->model_x_pos_property, 5.0f, 0.1f, 0.005f);
       nk_slider_float(ctx, -10.0f, &unit->translation[0], 10.0f, unit->model_x_pos_property);    
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "Y:", -5.0f, &unit->model_y_pos_property, 5.0f, 0.1f, 0.05f);
+      nk_property_float(ctx, "Y:", -5.0f, &unit->model_y_pos_property, 5.0f, 0.1f, 0.005f);
       nk_slider_float(ctx, -10.0f, &unit->translation[1], 10.0f, unit->model_y_pos_property);    
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "Z:", -5.0f, &unit->model_z_pos_property, 5.0f, 0.1f, 0.05f);
+      nk_property_float(ctx, "Z:", -5.0f, &unit->model_z_pos_property, 5.0f, 0.1f, 0.005f);
       nk_slider_float(ctx, -10.0f, &unit->translation[2], 10.0f, unit->model_z_pos_property);    
+
+      nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 1);
+      if (nk_button_label(ctx, "Reset Position")) { 
+        unit->translation[0] = 0;
+        unit->translation[1] = 0;
+        unit->translation[2] = 0;
+      }
 
       nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_LABEL_HEIGHT, 1);
       nk_label(ctx, "Rotation", NK_TEXT_CENTERED);
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "X:", -255.0f, &unit->model_rotation_x_property, 180.0f, 1.0f, 0.1f);
-      nk_slider_float(ctx, -255.0f, &unit->rotation[0], 180.0f, unit->model_rotation_x_property);    
+      nk_property_float(ctx, "X:", -5.0f, &unit->model_rotation_x_property, 5.0f, 1.0f, 0.005f);
+      nk_slider_float(ctx, -180.0f, &unit->rotation[0], 180.0f, unit->model_rotation_x_property);    
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "Y:", -255.0f, &unit->model_rotation_y_property, 180.0f, 1.0f, 0.1f);
-      nk_slider_float(ctx, -255.0f, &unit->rotation[1], 180.0f, unit->model_rotation_y_property);    
+      nk_property_float(ctx, "Y:", -5.0f, &unit->model_rotation_y_property, 5.0f, 1.0f, 0.005f);
+      nk_slider_float(ctx, -180.0f, &unit->rotation[1], 180.0f, unit->model_rotation_y_property);    
 
       nk_layout_row(ctx, NK_DYNAMIC, GUI_TRANSFORM_PANEL_POSITION_BOX_ITEM_HEIGHT, 2, ratio_two);
-      nk_property_float(ctx, "Z:", -255.0f, &unit->model_rotation_z_property, 180.0f, 1.0f, 0.1f);
-      nk_slider_float(ctx, -255.0f, &unit->rotation[2], 180.0f, unit->model_rotation_z_property);    
+      nk_property_float(ctx, "Z:", -5.0f, &unit->model_rotation_z_property, 5.0f, 1.0f, 0.005f);
+      nk_slider_float(ctx, -180.0f, &unit->rotation[2], 180.0f, unit->model_rotation_z_property);    
 
       nk_layout_row_dynamic(ctx, GUI_TRANSFORM_PANEL_LABEL_HEIGHT, 1);
       nk_label(ctx, "Scale", NK_TEXT_CENTERED);
@@ -48,7 +54,7 @@ void GUI_draw_transform_panel(struct nk_context *ctx, struct GUI_transform_panel
     }
 }
 
-void GUI_draw_view_panel(struct nk_context *ctx, struct GUI_view_settings *settings) {
+static void GUI_draw_view_panel(struct nk_context *ctx, struct GUI_view_settings *settings) {
 
   if (nk_begin(ctx, "Main", nk_rect(0, GUI_TRANSFORM_PANEL_Y_START, GUI_WIN_WIDTH_X, GUI_TRANSFORM_PANEL_Y_END), NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR )) {
 
@@ -112,7 +118,7 @@ void GUI_draw_view_panel(struct nk_context *ctx, struct GUI_view_settings *setti
 }
 
 
-void GUI_draw_status_bar(struct nk_context *ctx, struct GUI_status_bar *unit) {
+static void GUI_draw_status_bar(struct nk_context *ctx, struct GUI_status_bar *unit) {
   if (nk_begin(ctx, "StatusBar", nk_rect(0, WIN_HEIGHT - GUI_STATUS_BAR_HEIGHT, WIN_WIDTH, GUI_STATUS_BAR_HEIGHT), NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR)) {
       nk_layout_row_dynamic(ctx, GUI_STATUS_BAR_ITEMS_HEIGHT, 3);
       nk_labelf(ctx, NK_TEXT_LEFT, "[FILE]: %s", unit->file_name);
@@ -121,12 +127,12 @@ void GUI_draw_status_bar(struct nk_context *ctx, struct GUI_status_bar *unit) {
   }
 }
 
-void GUI_draw_upper_tool_bar(struct nk_context *ctx) {
+static void GUI_draw_upper_tool_bar(struct nk_context *ctx) {
   if (nk_begin(ctx, "ToolBar", nk_rect(0, 0, WIN_WIDTH, GUI_STATUS_BAR_HEIGHT), NK_WINDOW_BORDER | NK_WINDOW_BACKGROUND | NK_WINDOW_NO_SCROLLBAR)) {
   }
 }
 
-void GUI_draw_tabs(struct nk_context *ctx, struct GUI_tabs_bar *unit) {
+static void GUI_draw_tabs(struct nk_context *ctx, struct GUI_tabs_bar *unit) {
   if (nk_begin(ctx, "Tabs", nk_rect(0, GUI_TABS_BUTTONS_START - 3, GUI_TABS_BUTTONS_WIDTH, GUI_TABS_BUTTONS_HEIGHT), NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
     
     nk_layout_row_dynamic(ctx, GUI_TABS_BUTTONS_ITEM_HEIGHT, unit->tabs_amount);
@@ -138,7 +144,7 @@ void GUI_draw_tabs(struct nk_context *ctx, struct GUI_tabs_bar *unit) {
   }
 
 }
-void GUI_browse_obj_files(struct nk_context *ctx, Model **model, struct GUI_directory_data *data) {
+static void GUI_browse_obj_files(struct nk_context *ctx, Model **model, struct GUI_directory_data *data) {
 
     if (nk_begin(ctx, "OBJ File Browser", nk_rect(0, GUI_FILE_BROWSE_Y_START, GUI_WIN_WIDTH_X, GUI_FILE_BROWSE_HEIGHT),  // Увеличим высоту окна
                  NK_WINDOW_BORDER | NK_WINDOW_TITLE)) {

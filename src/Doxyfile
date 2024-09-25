@@ -1,0 +1,57 @@
+# Doxyfile 1.9.1
+
+# Основная информация
+PROJECT_NAME           = "3D Viewer"
+PROJECT_BRIEF          = "Документация для проекта 3D Viewer"
+PROJECT_LOGO           = "logo.png"     # Укажите путь к логотипу, если есть
+OUTPUT_DIRECTORY       = docs           # Папка для выходной документации
+
+# Включаемые файлы
+INPUT                  = ./src ./include
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = YES            # Рекурсивный поиск файлов в каталогах
+EXCLUDE_PATTERNS       = */tests/*       # Исключить файлы тестов
+
+# Типы документов
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# Документация для всех файлов и функций
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+HIDE_UNDOC_MEMBERS     = YES
+
+# Работа с комментариями
+JAVADOC_AUTOBRIEF      = YES
+MULTILINE_CPP_IS_BRIEF = YES
+
+# Стиль оформления HTML-документации
+HTML_OUTPUT            = html
+HTML_COLORSTYLE_HUE    = 220             # Настройка цвета
+HTML_DYNAMIC_MENUS     = YES
+
+# Название и подзаголовок документации
+PROJECT_NAME           = "3D Viewer"
+PROJECT_BRIEF          = "Программа для визуализации 3D моделей в формате OBJ."
+
+# Документируем заголовки файлов
+OPTIMIZE_OUTPUT_FOR_C  = YES
+
+# Генерация диаграмм
+HAVE_DOT               = YES
+DOT_PATH               = /usr/bin/dot    # Укажите путь к dot, если Graphviz установлен
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_NUM_THREADS        = 4
+
+# Стандартная информация
+OUTPUT_LANGUAGE        = Russian
+INLINE_INHERITED_MEMB  = YES
+
+# Директории для хранения изображений и диаграмм
+IMAGE_PATH             = ./images        # Путь к папке с изображениями
+DOT_GRAPH_MAX_NODES    = 50
+MAX_DOT_GRAPH_DEPTH    = 3

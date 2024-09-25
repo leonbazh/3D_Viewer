@@ -21,6 +21,7 @@
 #include "gui/NkSetDraculaTheme.c"
 #include "gui/nk_transform_gui_module.c"
 #include "model_loader.h"
+#include "transformations.h"
 
 void render_model(Model *model, GUI_view_settings *settings,
                   struct GUI_transform_panel *unit) {

@@ -4,13 +4,8 @@ static void set_style(struct nk_context *ctx) {
   struct nk_color currentline = nk_rgba(68, 71, 90, 255);
   struct nk_color foreground = nk_rgba(248, 248, 242, 255);
   struct nk_color comment = nk_rgba(98, 114, 164, 255);
-  /* struct nk_color cyan = nk_rgba(139, 233, 253, 255); */
-  /* struct nk_color green = nk_rgba(80, 250, 123, 255); */
-  /* struct nk_color orange = nk_rgba(255, 184, 108, 255); */
   struct nk_color pink = nk_rgba(255, 121, 198, 255);
   struct nk_color purple = nk_rgba(189, 147, 249, 255);
-  /* struct nk_color red = nk_rgba(255, 85, 85, 255); */
-  /* struct nk_color yellow = nk_rgba(241, 250, 140, 255); */
   table[NK_COLOR_TEXT] = foreground;
   table[NK_COLOR_WINDOW] = background;
   table[NK_COLOR_HEADER] = currentline;

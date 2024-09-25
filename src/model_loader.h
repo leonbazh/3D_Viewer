@@ -1,28 +1,70 @@
+/**
+ * @file model_loader.h
+ * @brief Заголовочный файл для работы с 3D моделями, загружаемыми из файлов формата OBJ.
+ *
+ * Этот файл содержит определения структур данных для представления вершин и поверхностей (полигонов),
+ * а также функции для загрузки модели из файла OBJ и освобождения памяти.
+ */
+
 #ifndef MODEL_LOADER_H
 #define MODEL_LOADER_H
 
-// Struct to represent a vertex in 3D space
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * @brief Структура для представления вершины 3D модели.
+ *
+ * Структура `Vertex` содержит координаты одной вершины в 3D пространстве: x, y и z.
+ */
 typedef struct {
-  float x, y, z;
+  float x, y, z;  ///< Координаты вершины по осям X, Y и Z.
 } Vertex;
 
-// Struct to represent a face (triangle) by indexing vertices
+/**
+ * @brief Структура для представления треугольной грани (поверхности) 3D модели.
+ *
+ * Структура `Face` хранит индексы трёх вершин, образующих треугольную грань модели.
+ * Индексы вершин ссылаются на массив вершин, который содержится в структуре модели.
+ */
 typedef struct {
-  int v1, v2, v3;  // Vertex indices for the face
+  int v1, v2, v3;  ///< Индексы вершин, составляющих треугольную грань.
 } Face;
 
-// Struct to represent the entire 3D model
+/**
+ * @brief Структура для представления 3D модели.
+ *
+ * Структура `Model` содержит массив вершин и массив граней (поверхностей),
+ * а также количество вершин и граней модели.
+ */
 typedef struct {
-  Vertex *vertices;  // Array of vertices
-  Face *faces;       // Array of faces (triangles)
-  int vertex_count;  // Number of vertices
-  int face_count;    // Number of faces
+  Vertex *vertices;  
+  Face *faces;       
+  int vertex_count;  
+  int face_count;    
 } Model;
 
-// Function to load a model from an OBJ file
+/**
+ * @brief Загружает 3D-модель из файла формата OBJ.
+ *
+ * Эта функция открывает указанный файл, парсит данные вершин и полигонов из файла формата OBJ
+ * и сохраняет их в структуру Model. Если файл не удается открыть или формат данных нарушен,
+ * функция возвращает NULL.
+ *
+ * @param filepath Путь к файлу OBJ.
+ * @return Указатель на загруженную модель или NULL в случае ошибки.
+ */
 Model *load_model_from_obj(const char *filepath);
 
-// Function to free the memory allocated for the model
+/**
+ * @brief Освобождает память, выделенную для модели.
+ *
+ * Эта функция освобождает память, которая была выделена для массива вершин, полигонов,
+ * а также самой структуры модели.
+ *
+ * @param model Указатель на структуру Model, подлежащую освобождению.
+ */
 void free_model(Model *model);
 
 #endif

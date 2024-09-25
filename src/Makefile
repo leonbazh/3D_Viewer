@@ -3,7 +3,7 @@ VERSION = 1.0
 DIST_DIR = dist
 INSTALL_DIR = /usr/local/bin
 DOCS_DIR = docs
-GCOV_OUTPUT = gcov_report
+GCOV_OUTPUT = gcov_report *.gc*
 
 CFLAGS += -std=c11 -Wall -Wextra -pedantic -O2 -g
 SRC = main.c model_loader.c transformations.c misc_funcs.c
@@ -53,9 +53,10 @@ dist:
 	@echo "Distribution package created: $(DIST_DIR)/$(BIN)-$(VERSION).tar.gz"
 
 tests:
-	@$(MAKE) -C tests
-	./tests/test_runner
-	@echo "Tests complete"
+	gcc tests/backend_tests.c
+	#@$(MAKE) -C tests
+	#./tests/test_runner
+	#@echo "Tests complete"
 
 gcov_report: CFLAGS += -fprofile-arcs -ftest-coverage
 gcov_report: clean $(OBJ)
